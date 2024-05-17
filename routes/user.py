@@ -11,19 +11,20 @@ user_route = Blueprint('user', __name__)
 def read_user(id_user):
     user = User.query.get(id_user)
     if user:
-        return{"username": user.username, "perfil": user.role}
+        return{"email": user.email, "name": user.name}
     
     return jsonify({"message": "Usuário não encontrado!"}), 404
 
 @user_route.route("/", methods=["POST"])
 def create_user():
     data = request.json
-    username = data.get("username")
+    name = data.get("name")
+    email = data.get("email")
     password = data.get("password")
 
-    if username and password:
+    if name and password:
         hashed_password = bcrypt.hashpw(str.encode(password), bcrypt.gensalt())
-        user = User(username=username, password=hashed_password, role='user')
+        user = User(name=name, email=email, password=hashed_password)
         db.session.add(user)
         db.session.commit()
         return jsonify({"message": "Usuário cadastrado com sucesso!"})
