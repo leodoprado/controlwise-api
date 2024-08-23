@@ -16,3 +16,8 @@ Control Wise - Controle de Finanças Pessoais
 
 - [ ] O usuário deve ser identificado por um JWT (JSON Web Token);
 - [ ] A senha do usuário precisa estar criptografada;
+
+```
+$ npm install
+$ npm run dev (/docs)
+```
