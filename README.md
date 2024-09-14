@@ -1,6 +1,4 @@
-# App
-
-Control Wise - Controle de Finanças Pessoais
+![alt text](public/logo-readme.svg)
 
 ## Comandos de Execução
 
