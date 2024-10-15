@@ -40,7 +40,10 @@ app.register(fastifyJwt, {
     secret: 'my-jwt-secret',
 })
 
-app.register(fastifyCors)
+app.register(fastifyCors, {
+    origin: 'http://localhost:5173',
+    credentials: true
+});
 
 // register routes
 app.register(createAccount)

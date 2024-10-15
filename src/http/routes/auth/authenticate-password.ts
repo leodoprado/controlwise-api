@@ -17,7 +17,7 @@ export async function authenticateWithPassword(app: FastifyInstance) {
             }),
             response: {
                 201: z.object({
-                    token: z.string(),
+                    accessToken: z.string(),
                 })
             }
 
@@ -46,7 +46,7 @@ export async function authenticateWithPassword(app: FastifyInstance) {
             throw new BadRequestError('Invalid credentials!')
         }
 
-        const token = await reply.jwtSign(
+        const accessToken = await reply.jwtSign(
             {
                 sub: userFromEmail.id,
             },
@@ -57,6 +57,6 @@ export async function authenticateWithPassword(app: FastifyInstance) {
             }
         )
 
-        return reply.status(201).send({ token })
+        return reply.status(201).send({ accessToken })
     })
 }

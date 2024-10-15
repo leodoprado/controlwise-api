@@ -6,7 +6,7 @@ import { BadRequestError } from "../_errors/bad-request-error";
 import { auth } from "../../middlewares/auth";
 
 export async function getProfile(app: FastifyInstance) {
-    app.withTypeProvider<ZodTypeProvider>().register(auth).get('/settings/profile', {
+    app.withTypeProvider<ZodTypeProvider>().register(auth).get('/me', {
         schema: {
             tags: ['🔒Authenticate'],
             summary: 'Get authenticated user profile',
@@ -22,7 +22,7 @@ export async function getProfile(app: FastifyInstance) {
             }
         }
     }, async (request, reply) => {
-        const userId  = await request.getCurrentUserId()
+        const userId = await request.getCurrentUserId()
 
         const user = await prisma.user.findUnique({
             select: {
