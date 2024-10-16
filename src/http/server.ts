@@ -14,6 +14,7 @@ import { authenticateWithPassword } from "./routes/auth/authenticate-password";
 import { getProfile } from "./routes/auth/get-profile";
 import { requestPasswordRecover } from "./routes/auth/request-password-recover";
 import { resetPassword } from "./routes/auth/reset-password";
+import { updateProfile } from "./routes/auth/update-profile";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -49,6 +50,7 @@ app.register(fastifyCors, {
 app.register(createAccount)
 app.register(authenticateWithPassword)
 app.register(getProfile)
+app.register(updateProfile)
 app.register(requestPasswordRecover)
 app.register(resetPassword)
 
