@@ -16,7 +16,6 @@ export async function getProfile(app: FastifyInstance) {
                         id: z.string().uuid(),
                         nome: z.string(),
                         email: z.string().email(),
-                        cpf: z.string().nullable(),
                         telefone: z.string().nullable()
                     })
                 })
@@ -30,7 +29,6 @@ export async function getProfile(app: FastifyInstance) {
                 id: true,
                 nome: true,
                 email: true,
-                cpf: true,
                 telefone: true,
             },
             where: {
