@@ -8,30 +8,137 @@ datasource db {
 }
 
 model User {
-  id           String      @id @default(uuid())
-  nome         String
-  email        String      @unique
-  telefone     String?
-  passwordHash String?
-  createdAt    DateTime    @default(now())
-  updatedAt    DateTime    @updatedAt
-  categories   Categorie[]
+  id             String          @id @default(uuid())
+  nome           String
+  email          String          @unique
+  telefone       String?
+  passwordHash   String
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  categories     Categorie[]
+  transactions   Transaction[]
+  plannings      Planning[]
+  goals          Goal[]
+  assets         Asset[]
+  assetMovements AssetMovement[]
 
   @@map("users")
 }
 
 model Categorie {
-  id        String   @id @default(uuid())
-  codigo    Int
-  nome      String
-  tipo      String
-  codIcone  Int
-  codColor  Int
-  descricao String
-  userId    String?
-  user      User?    @relation(fields: [userId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String          @id @default(uuid())
+  codigo       Int
+  nome         String
+  tipo         TransactionType
+  codIcone     Int
+  codColor     Int
+  descricao    String?
+  userId       String
+  user         User           @relation(fields: [userId], references: [id])
+  transactions Transaction[]
+  createdAt    DateTime        @default(now())
+  updatedAt    DateTime        @updatedAt
+  plannings    Planning[]
 
   @@map("categories")
+}
+
+model Transaction {
+  id         String          @id @default(uuid())
+  valor      Decimal
+  descricao  String?
+  tipo       TransactionType 
+  data       DateTime
+  mes        Int
+  ano        Int
+  categoryId String
+  category   Categorie      @relation(fields: [categoryId], references: [id])
+  userId     String
+  user       User           @relation(fields: [userId], references: [id])
+  createdAt  DateTime        @default(now())
+  updatedAt  DateTime        @updatedAt
+
+  @@map("transactions")
+}
+
+model Planning {
+  id          String     @id @default(uuid())
+  categoriaId String
+  categoria   Categorie @relation(fields: [categoriaId], references: [id])
+  objetivo    String
+  valor       Decimal
+  prazo       DateTime
+  mes         Int
+  ano         Int
+  userId      String
+  user        User      @relation(fields: [userId], references: [id])
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("plannings")
+}
+
+model Goal {
+  id           String    @id @default(uuid())
+  titulo       String
+  descricao    String?
+  valorTotal   Decimal
+  valorInicial Decimal?
+  valorAtual   Decimal   @default(0)
+  dataLimite   DateTime?
+  userId       String
+  user         User      @relation(fields: [userId], references: [id])
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@map("goals")
+}
+
+model Asset {
+  id        String          @id @default(uuid())
+  nome      String 
+  tipo      AssetType 
+  descricao String?
+  userId    String
+  user      User            @relation(fields: [userId], references: [id])
+  createdAt DateTime        @default(now())
+  updatedAt DateTime        @updatedAt
+  movements AssetMovement[] 
+
+  @@map("assets")
+}
+
+model AssetMovement {
+  id            String       @id @default(uuid())
+  data          DateTime 
+  quantidade    Decimal 
+  valorUnitario Decimal 
+  totalValor    Decimal 
+  tipoMovimento MovementType 
+  assetId       String
+  asset         Asset        @relation(fields: [assetId], references: [id])
+  userId        String
+  user          User         @relation(fields: [userId], references: [id])
+  createdAt     DateTime     @default(now())
+  updatedAt     DateTime     @updatedAt
+
+  @@map("asset_movements")
+}
+
+enum TransactionType {
+  RECEITA
+  DESPESA
+}
+
+enum MovementType {
+  COMPRA
+  VENDA
+}
+
+enum AssetType {
+  ACAO // Ações
+  FUNDO // Fundos de Investimento
+  CRIPTOMOEDA // Criptomoedas
+  STOCK // Ações Internacionais (Stocks)
+  BDR // BDRs
 }
