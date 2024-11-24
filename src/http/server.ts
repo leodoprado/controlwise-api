@@ -13,6 +13,7 @@ import { createAccount } from "./routes/auth/create-account";
 import { authenticateWithPassword } from "./routes/auth/authenticate";
 import { getProfile } from "./routes/profile/get-profile";
 import { updateProfile } from "./routes/profile/update-profile";
+import { getCategories } from "./routes/categories/get-categories";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -49,6 +50,7 @@ app.register(createAccount)
 app.register(authenticateWithPassword)
 app.register(getProfile)
 app.register(updateProfile)
+app.register(getCategories)
 
 app.listen({ port: 3333 }).then(() => {
     console.log('HTTP server running!')
