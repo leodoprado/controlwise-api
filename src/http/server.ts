@@ -11,9 +11,12 @@ import {
 } from 'fastify-type-provider-zod'
 import { createAccount } from "./routes/auth/create-account";
 import { authenticateWithPassword } from "./routes/auth/authenticate";
-import { getProfile } from "./routes/profile/get-profile";
-import { updateProfile } from "./routes/profile/update-profile";
-import { getCategories } from "./routes/categories/get-categories";
+import { getProfile } from "./routes/config/profile/get-profile";
+import { updateProfile } from "./routes/config/profile/update-profile";
+import { getCategories } from "./routes/config/categories/get-categories";
+import { createCategory } from "./routes/config/categories/post-categories";
+import { getCategorieDetails } from "./routes/config/categories/get-categorie-details";
+import { deleteCategorie } from "./routes/config/categories/delete-categorie";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -51,6 +54,9 @@ app.register(authenticateWithPassword)
 app.register(getProfile)
 app.register(updateProfile)
 app.register(getCategories)
+app.register(createCategory)
+app.register(getCategorieDetails)
+app.register(deleteCategorie)
 
 app.listen({ port: 3333 }).then(() => {
     console.log('HTTP server running!')

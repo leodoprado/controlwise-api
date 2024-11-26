@@ -42,20 +42,6 @@ export async function createAccount(app: FastifyInstance) {
                 },
             });
 
-            // Cria categorias padrão para o novo usuário
-            const defaultCategories = [
-                { codigo: 1, nome: 'Casa', tipo: 'Despesa', codIcone: 1, codColor: 1, descricao: '', userId: user.id },
-                { codigo: 2, nome: 'Carro', tipo: 'Despesa', codIcone: 2, codColor: 2, descricao: '', userId: user.id },
-                { codigo: 3, nome: 'Educação', tipo: 'Despesa', codIcone: 3, codColor: 3, descricao: '', userId: user.id },
-                { codigo: 4, nome: 'Eletrônico', tipo: 'Despesa', codIcone: 4, codColor: 4, descricao: '', userId: user.id },
-                { codigo: 5, nome: 'Lazer', tipo: 'Despesa', codIcone: 5, codColor: 5, descricao: '', userId: user.id },
-                { codigo: 6, nome: 'Outros', tipo: 'Despesa', codIcone: 6, codColor: 6, descricao: '', userId: user.id },
-            ];
-
-            await prisma.categorie.createMany({
-                data: defaultCategories,
-            });
-
             return reply.status(201).send({ user, message: 'Account created with default categories' });
         }
     );

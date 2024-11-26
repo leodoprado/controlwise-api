@@ -23,7 +23,6 @@ CREATE TABLE "users" (
 -- CreateTable
 CREATE TABLE "categories" (
     "id" TEXT NOT NULL,
-    "codigo" INTEGER NOT NULL,
     "nome" TEXT NOT NULL,
     "tipo" "TransactionType" NOT NULL,
     "codIcone" INTEGER NOT NULL,

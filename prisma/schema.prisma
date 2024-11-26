@@ -27,7 +27,6 @@ model User {
 
 model Categorie {
   id           String          @id @default(uuid())
-  codigo       Int
   nome         String
   tipo         TransactionType
   codIcone     Int

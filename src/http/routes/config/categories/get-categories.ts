@@ -1,9 +1,9 @@
 import { FastifyInstance } from "fastify";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
-import { prisma } from "../../../lib/prisma";
-import { BadRequestError } from "../_errors/bad-request-error";
-import { auth } from "../../middlewares/auth";
+import { prisma } from "../../../../lib/prisma";
+import { BadRequestError } from "../../_errors/bad-request-error";
+import { auth } from "../../../middlewares/auth";
 
 export async function getCategories(app: FastifyInstance) {
 
@@ -16,7 +16,6 @@ export async function getCategories(app: FastifyInstance) {
                     categories: z.array(
                         z.object({
                             id: z.string(),
-                            codigo: z.number(),
                             nome: z.string(),
                             tipo: z.enum(['DESPESA', 'RECEITA']),
                             codIcone: z.number(),
@@ -35,15 +34,12 @@ export async function getCategories(app: FastifyInstance) {
             },
             select: {
                 id: true,
-                codigo: true,
                 nome: true,
                 tipo: true,
                 codIcone: true,
                 codColor: true,
             }
         });
-
-        console.log('Categories:', categories);
 
         if (!categories) {
             throw new BadRequestError('No categories found for this user.');

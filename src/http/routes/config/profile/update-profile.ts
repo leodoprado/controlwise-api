@@ -1,9 +1,9 @@
 import type { FastifyInstance } from "fastify";
 import type { ZodTypeProvider } from "fastify-type-provider-zod";
 import { z } from "zod";
-import { prisma } from "../../../lib/prisma";
-import { BadRequestError } from "../_errors/bad-request-error";
-import { auth } from "../../middlewares/auth"; // Middleware de autenticação
+import { prisma } from "../../../../lib/prisma";
+import { BadRequestError } from "../../_errors/bad-request-error";
+import { auth } from "../../../middlewares/auth"; // Middleware de autenticação
 import { hash } from "bcryptjs";
 
 export async function updateProfile(app: FastifyInstance) {
