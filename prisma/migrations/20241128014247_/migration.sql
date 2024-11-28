@@ -2,6 +2,9 @@
 CREATE TYPE "TransactionType" AS ENUM ('RECEITA', 'DESPESA');
 
 -- CreateEnum
+CREATE TYPE "TransactionStatus" AS ENUM ('PENDENTE', 'EXECUTADO', 'CANCELADO');
+
+-- CreateEnum
 CREATE TYPE "MovementType" AS ENUM ('COMPRA', 'VENDA');
 
 -- CreateEnum
@@ -50,11 +53,12 @@ CREATE TABLE "categories" (
 CREATE TABLE "transactions" (
     "id" TEXT NOT NULL,
     "valor" DECIMAL(65,30) NOT NULL,
+    "status" "TransactionStatus" NOT NULL DEFAULT 'PENDENTE',
     "descricao" TEXT,
     "tipo" "TransactionType" NOT NULL,
     "data" TIMESTAMP(3) NOT NULL,
-    "mes" INTEGER NOT NULL,
-    "ano" INTEGER NOT NULL,
+    "isRecurring" BOOLEAN NOT NULL DEFAULT false,
+    "nextRecurrence" TIMESTAMP(3),
     "categoryId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

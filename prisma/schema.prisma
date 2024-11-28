@@ -55,19 +55,20 @@ model Categorie {
 }
 
 model Transaction {
-  id         String          @id @default(uuid())
-  valor      Decimal
-  descricao  String?
-  tipo       TransactionType
-  data       DateTime
-  mes        Int
-  ano        Int
-  categoryId String
-  category   Categorie       @relation(fields: [categoryId], references: [id])
-  userId     String
-  user       User            @relation(fields: [userId], references: [id])
-  createdAt  DateTime        @default(now())
-  updatedAt  DateTime        @updatedAt
+  id             String            @id @default(uuid())
+  valor          Decimal
+  status         TransactionStatus @default(PENDENTE)
+  descricao      String?
+  tipo           TransactionType
+  data           DateTime
+  isRecurring    Boolean           @default(false)
+  nextRecurrence DateTime?
+  categoryId     String
+  category       Categorie         @relation(fields: [categoryId], references: [id])
+  userId         String
+  user           User              @relation(fields: [userId], references: [id])
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
 
   @@map("transactions")
 }
@@ -139,6 +140,12 @@ model AssetMovement {
 enum TransactionType {
   RECEITA
   DESPESA
+}
+
+enum TransactionStatus {
+  PENDENTE
+  EXECUTADO
+  CANCELADO
 }
 
 enum MovementType {
