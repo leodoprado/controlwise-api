@@ -21,8 +21,20 @@ model User {
   goals          Goal[]
   assets         Asset[]
   assetMovements AssetMovement[]
+  Parameter      Parameter[]
 
   @@map("users")
+}
+
+model Parameter {
+  id            String   @id @default(uuid())
+  anoReferencia Int
+  userId        String
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@map("parameters")
 }
 
 model Categorie {
@@ -33,7 +45,7 @@ model Categorie {
   codColor     Int
   descricao    String?
   userId       String
-  user         User           @relation(fields: [userId], references: [id])
+  user         User            @relation(fields: [userId], references: [id])
   transactions Transaction[]
   createdAt    DateTime        @default(now())
   updatedAt    DateTime        @updatedAt
@@ -46,14 +58,14 @@ model Transaction {
   id         String          @id @default(uuid())
   valor      Decimal
   descricao  String?
-  tipo       TransactionType 
+  tipo       TransactionType
   data       DateTime
   mes        Int
   ano        Int
   categoryId String
-  category   Categorie      @relation(fields: [categoryId], references: [id])
+  category   Categorie       @relation(fields: [categoryId], references: [id])
   userId     String
-  user       User           @relation(fields: [userId], references: [id])
+  user       User            @relation(fields: [userId], references: [id])
   createdAt  DateTime        @default(now())
   updatedAt  DateTime        @updatedAt
 
@@ -61,7 +73,7 @@ model Transaction {
 }
 
 model Planning {
-  id          String     @id @default(uuid())
+  id          String    @id @default(uuid())
   categoriaId String
   categoria   Categorie @relation(fields: [categoriaId], references: [id])
   objetivo    String
@@ -71,8 +83,8 @@ model Planning {
   ano         Int
   userId      String
   user        User      @relation(fields: [userId], references: [id])
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@map("plannings")
 }
@@ -95,25 +107,25 @@ model Goal {
 
 model Asset {
   id        String          @id @default(uuid())
-  nome      String 
-  tipo      AssetType 
+  nome      String
+  tipo      AssetType
   descricao String?
   userId    String
   user      User            @relation(fields: [userId], references: [id])
   createdAt DateTime        @default(now())
   updatedAt DateTime        @updatedAt
-  movements AssetMovement[] 
+  movements AssetMovement[]
 
   @@map("assets")
 }
 
 model AssetMovement {
   id            String       @id @default(uuid())
-  data          DateTime 
-  quantidade    Decimal 
-  valorUnitario Decimal 
-  totalValor    Decimal 
-  tipoMovimento MovementType 
+  data          DateTime
+  quantidade    Decimal
+  valorUnitario Decimal
+  totalValor    Decimal
+  tipoMovimento MovementType
   assetId       String
   asset         Asset        @relation(fields: [assetId], references: [id])
   userId        String

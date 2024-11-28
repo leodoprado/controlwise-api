@@ -15,8 +15,8 @@ export async function createAccount(app: FastifyInstance) {
                 body: z.object({
                     nome: z.string(),
                     email: z.string().email(),
-                    password: z.string().min(6)
-                })
+                    password: z.string().min(6),
+                }),
             },
         },
         async (request, reply) => {
@@ -24,7 +24,7 @@ export async function createAccount(app: FastifyInstance) {
 
             // Verifica se já existe um usuário com o mesmo email
             const userWithSameEmail = await prisma.user.findUnique({
-                where: { email }
+                where: { email },
             });
 
             if (userWithSameEmail) {
@@ -33,16 +33,26 @@ export async function createAccount(app: FastifyInstance) {
 
             const passwordHash = await hash(password, 6);
 
-            // Cria o usuário
+            const currentYear = new Date().getFullYear();
+
+            // Cria o usuário e o parâmetro relacionado
             const user = await prisma.user.create({
                 data: {
                     nome,
                     email,
                     passwordHash,
+                    Parameter: {
+                        create: {
+                            anoReferencia: currentYear,
+                        },
+                    },
+                },
+                include: {
+                    Parameter: true, // Inclui os parâmetros criados no retorno
                 },
             });
 
-            return reply.status(201).send({ user, message: 'Account created with default categories' });
+            return reply.status(201).send({ user, message: 'Account created with default parameters' });
         }
     );
 }
