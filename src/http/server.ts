@@ -20,6 +20,7 @@ import { deleteCategorie } from "./routes/config/categories/delete-categorie";
 import { getParameters } from "./routes/config/parameters/get-parameters";
 import { updateParameters } from "./routes/config/parameters/update-parameters";
 import { createTransaction } from "./routes/myexpenses/transactions/post-transaction";
+import { createPlanning } from "./routes/myexpenses/planning/post-planning";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -63,6 +64,7 @@ app.register(deleteCategorie)
 app.register(getParameters)
 app.register(updateParameters)
 app.register(createTransaction)
+app.register(createPlanning)
 
 app.listen({ port: 3333 }).then(() => {
     console.log('HTTP server running!')

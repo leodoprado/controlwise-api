@@ -75,13 +75,10 @@ model Transaction {
 
 model Planning {
   id          String    @id @default(uuid())
-  categoriaId String
-  categoria   Categorie @relation(fields: [categoriaId], references: [id])
-  objetivo    String
-  valor       Decimal
-  prazo       DateTime
-  mes         Int
-  ano         Int
+  titulo      String
+  valorTarget Decimal
+  categoryId  String
+  category    Categorie @relation(fields: [categoryId], references: [id])
   userId      String
   user        User      @relation(fields: [userId], references: [id])
   createdAt   DateTime  @default(now())

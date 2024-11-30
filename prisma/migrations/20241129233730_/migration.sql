@@ -70,12 +70,9 @@ CREATE TABLE "transactions" (
 -- CreateTable
 CREATE TABLE "plannings" (
     "id" TEXT NOT NULL,
-    "categoriaId" TEXT NOT NULL,
-    "objetivo" TEXT NOT NULL,
-    "valor" DECIMAL(65,30) NOT NULL,
-    "prazo" TIMESTAMP(3) NOT NULL,
-    "mes" INTEGER NOT NULL,
-    "ano" INTEGER NOT NULL,
+    "titulo" TEXT NOT NULL,
+    "valorTarget" DECIMAL(65,30) NOT NULL,
+    "categoryId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -144,7 +141,7 @@ ALTER TABLE "transactions" ADD CONSTRAINT "transactions_categoryId_fkey" FOREIGN
 ALTER TABLE "transactions" ADD CONSTRAINT "transactions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "plannings" ADD CONSTRAINT "plannings_categoriaId_fkey" FOREIGN KEY ("categoriaId") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "plannings" ADD CONSTRAINT "plannings_categoryId_fkey" FOREIGN KEY ("categoryId") REFERENCES "categories"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "plannings" ADD CONSTRAINT "plannings_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
