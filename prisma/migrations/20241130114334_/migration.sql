@@ -73,6 +73,7 @@ CREATE TABLE "plannings" (
     "titulo" TEXT NOT NULL,
     "valorTarget" DECIMAL(65,30) NOT NULL,
     "categoryId" TEXT NOT NULL,
+    "tipo" "TransactionType" NOT NULL,
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,

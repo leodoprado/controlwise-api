@@ -15,17 +15,19 @@ export async function createPlanning(app: FastifyInstance) {
                 body: z.object({
                     titulo: z.string(),
                     valorTarget: z.number(),
+                    tipo: z.enum(["RECEITA", "DESPESA"]),
                     categoryId: z.string(),
                 }),
             },
         },
         async (request, reply) => {
             const userId = await request.getCurrentUserId();
-            const { titulo, valorTarget, categoryId } = request.body;
+            const { titulo, valorTarget, tipo, categoryId } = request.body;
 
             const existPlanning = await prisma.planning.findFirst({
                 where: {
                     titulo,
+                    tipo,
                     categoryId,
                     userId,
                 },
@@ -39,6 +41,7 @@ export async function createPlanning(app: FastifyInstance) {
                 data: {
                     titulo,
                     valorTarget,
+                    tipo,
                     categoryId,
                     userId,
                 },

@@ -74,15 +74,16 @@ model Transaction {
 }
 
 model Planning {
-  id          String    @id @default(uuid())
+  id          String          @id @default(uuid())
   titulo      String
   valorTarget Decimal
   categoryId  String
-  category    Categorie @relation(fields: [categoryId], references: [id])
+  category    Categorie       @relation(fields: [categoryId], references: [id])
+  tipo        TransactionType
   userId      String
-  user        User      @relation(fields: [userId], references: [id])
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  user        User            @relation(fields: [userId], references: [id])
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
 
   @@map("plannings")
 }
@@ -90,11 +91,10 @@ model Planning {
 model Goal {
   id           String    @id @default(uuid())
   titulo       String
-  descricao    String?
+  dataLimite   DateTime?
   valorTotal   Decimal
   valorInicial Decimal?
-  valorAtual   Decimal   @default(0)
-  dataLimite   DateTime?
+  descricao    String?
   userId       String
   user         User      @relation(fields: [userId], references: [id])
   createdAt    DateTime  @default(now())
