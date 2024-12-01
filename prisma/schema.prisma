@@ -105,9 +105,9 @@ model Goal {
 
 model Asset {
   id        String          @id @default(uuid())
-  nome      String
   tipo      AssetType
-  descricao String?
+  ticker    String
+  nome      String
   userId    String
   user      User            @relation(fields: [userId], references: [id])
   createdAt DateTime        @default(now())
@@ -119,10 +119,9 @@ model Asset {
 
 model AssetMovement {
   id            String       @id @default(uuid())
-  data          DateTime
-  quantidade    Decimal
   valorUnitario Decimal
-  totalValor    Decimal
+  quantidade    Decimal
+  data          DateTime
   tipoMovimento MovementType
   assetId       String
   asset         Asset        @relation(fields: [assetId], references: [id])
@@ -151,9 +150,9 @@ enum MovementType {
 }
 
 enum AssetType {
-  ACAO // Ações
-  FUNDO // Fundos de Investimento
-  CRIPTOMOEDA // Criptomoedas
-  STOCK // Ações Internacionais (Stocks)
-  BDR // BDRs
+  ACAO
+  FII
+  CRIPTOMOEDA
+  STOCK
+  BDR
 }

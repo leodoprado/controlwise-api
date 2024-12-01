@@ -8,7 +8,7 @@ CREATE TYPE "TransactionStatus" AS ENUM ('PENDENTE', 'EXECUTADO', 'CANCELADO');
 CREATE TYPE "MovementType" AS ENUM ('COMPRA', 'VENDA');
 
 -- CreateEnum
-CREATE TYPE "AssetType" AS ENUM ('ACAO', 'FUNDO', 'CRIPTOMOEDA', 'STOCK', 'BDR');
+CREATE TYPE "AssetType" AS ENUM ('ACAO', 'FII', 'CRIPTOMOEDA', 'STOCK', 'BDR');
 
 -- CreateTable
 CREATE TABLE "users" (
@@ -85,11 +85,10 @@ CREATE TABLE "plannings" (
 CREATE TABLE "goals" (
     "id" TEXT NOT NULL,
     "titulo" TEXT NOT NULL,
-    "descricao" TEXT,
+    "dataLimite" TIMESTAMP(3),
     "valorTotal" DECIMAL(65,30) NOT NULL,
     "valorInicial" DECIMAL(65,30),
-    "valorAtual" DECIMAL(65,30) NOT NULL DEFAULT 0,
-    "dataLimite" TIMESTAMP(3),
+    "descricao" TEXT,
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -100,9 +99,9 @@ CREATE TABLE "goals" (
 -- CreateTable
 CREATE TABLE "assets" (
     "id" TEXT NOT NULL,
-    "nome" TEXT NOT NULL,
     "tipo" "AssetType" NOT NULL,
-    "descricao" TEXT,
+    "ticker" TEXT NOT NULL,
+    "nome" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -113,10 +112,9 @@ CREATE TABLE "assets" (
 -- CreateTable
 CREATE TABLE "asset_movements" (
     "id" TEXT NOT NULL,
-    "data" TIMESTAMP(3) NOT NULL,
-    "quantidade" DECIMAL(65,30) NOT NULL,
     "valorUnitario" DECIMAL(65,30) NOT NULL,
-    "totalValor" DECIMAL(65,30) NOT NULL,
+    "quantidade" DECIMAL(65,30) NOT NULL,
+    "data" TIMESTAMP(3) NOT NULL,
     "tipoMovimento" "MovementType" NOT NULL,
     "assetId" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
