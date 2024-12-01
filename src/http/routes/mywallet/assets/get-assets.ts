@@ -14,6 +14,7 @@ export async function getAssets(app: FastifyInstance) {
                 200: z.object({
                     assets: z.array(
                         z.object({
+                            id: z.string(),
                             ticker: z.string(),
                             nome: z.string(),
                             tipo: z.string(),
@@ -31,6 +32,7 @@ export async function getAssets(app: FastifyInstance) {
                 userId: userId,
             },
             select: {
+                id: true,
                 ticker: true,
                 nome: true,
                 tipo: true,

@@ -14,7 +14,7 @@ export async function createMovement(app: FastifyInstance) {
                 body: z.object({
                     valorUnitario: z.number(),
                     quantidade: z.number(),
-                    data: z.date(),
+                    data: z.preprocess((val) => (typeof val === "string" ? new Date(val) : val), z.date()),
                     tipoMovimento: z.enum(['COMPRA', 'VENDA']),
                     assetId: z.string()
                 })
