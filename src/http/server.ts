@@ -24,6 +24,7 @@ import { createPlanning } from "./routes/myexpenses/plannings/post-planning";
 import { createGoal } from "./routes/myexpenses/goals/post-goal";
 import { getAssets } from "./routes/mywallet/assets/get-assets";
 import { createMovement } from "./routes/mywallet/assets/post-movement";
+import { getExpensesMonth } from "./routes/myexpenses/dashboard/get-expenses-month";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -71,6 +72,7 @@ app.register(createPlanning)
 app.register(createGoal)
 app.register(getAssets)
 app.register(createMovement)
+app.register(getExpensesMonth)
 
 app.listen({ port: 3333 }).then(() => {
     console.log('HTTP server running!')

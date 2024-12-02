@@ -9,7 +9,7 @@ export async function getCategories(app: FastifyInstance) {
 
     app.withTypeProvider<ZodTypeProvider>().register(auth).get('/categories', {
         schema: {
-            tags: ['🔒Authenticate'],
+            tags: ['Categories'],
             summary: 'Get categories of the authenticated user',
             response: {
                 200: z.object({
