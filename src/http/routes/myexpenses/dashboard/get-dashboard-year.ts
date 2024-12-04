@@ -15,7 +15,7 @@ export async function getDashboardYears(app: FastifyInstance) {
                     z.object({
                         month: z.string(),
                         totalExpenses: z.string(),
-                        totalRevenues: z.string(),
+                        totalRevenues: z.string()
                     })
                 ),
             },

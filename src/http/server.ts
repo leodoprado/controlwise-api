@@ -27,6 +27,7 @@ import { createMovement } from "./routes/mywallet/assets/post-movement";
 import { getExpensesMonth } from "./routes/myexpenses/dashboard/get-dashboard-month";
 import { getDashboardYears } from "./routes/myexpenses/dashboard/get-dashboard-year";
 import { getCategorySummary } from "./routes/myexpenses/dashboard/get-categories-summary";
+import { getTransactionsByMonth } from "./routes/myexpenses/transactions/get-transactions";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -77,6 +78,7 @@ app.register(createMovement)
 app.register(getExpensesMonth)
 app.register(getDashboardYears)
 app.register(getCategorySummary)
+app.register(getTransactionsByMonth)
 
 app.listen({ port: 3333 }).then(() => {
     console.log('HTTP server running!')
