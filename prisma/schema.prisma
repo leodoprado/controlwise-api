@@ -65,6 +65,8 @@ model Transaction {
   nextRecurrence DateTime?
   categoryId     String
   category       Categorie         @relation(fields: [categoryId], references: [id])
+  planningId     String?
+  planning       Planning?         @relation(fields: [planningId], references: [id])
   userId         String
   user           User              @relation(fields: [userId], references: [id])
   createdAt      DateTime          @default(now())
@@ -84,6 +86,7 @@ model Planning {
   user        User            @relation(fields: [userId], references: [id])
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
+  Transaction Transaction[]
 
   @@map("plannings")
 }

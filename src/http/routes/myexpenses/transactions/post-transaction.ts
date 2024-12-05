@@ -15,16 +15,20 @@ export async function createTransaction(app: FastifyInstance) {
                     valor: z.number(),
                     descricao: z.string().nullable(),
                     tipo: z.enum(["RECEITA", "DESPESA"]),
-                    data: z.preprocess((val) => (typeof val === "string" ? new Date(val) : val), z.date()),
+                    data: z.preprocess(
+                        (val) => (typeof val === "string" ? new Date(val) : val),
+                        z.date()
+                    ),
                     categoryId: z.string(),
+                    planningId: z.string().nullable(),
                     isRecurring: z.boolean().optional().default(false),
                     status: z.enum(['PENDENTE', 'EXECUTADO', 'CANCELADO']).optional().default('PENDENTE'),
                 }),
             },
         },
         async (request, reply) => {
-            const userId = await request.getCurrentUserId()
-            const { valor, descricao, tipo, data, categoryId, isRecurring, status } = request.body;
+            const userId = await request.getCurrentUserId();
+            const { valor, descricao, tipo, data, categoryId, planningId, isRecurring, status } = request.body;
 
             const nextRecurrence = isRecurring
                 ? (() => {
@@ -40,11 +44,12 @@ export async function createTransaction(app: FastifyInstance) {
                     descricao,
                     data,
                     categoryId,
+                    planningId,
                     isRecurring,
                     nextRecurrence,
                     tipo,
                     status,
-                    userId: userId
+                    userId: userId,
                 },
             });
 

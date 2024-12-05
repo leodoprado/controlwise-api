@@ -28,6 +28,8 @@ import { getExpensesMonth } from "./routes/myexpenses/dashboard/get-dashboard-mo
 import { getDashboardYears } from "./routes/myexpenses/dashboard/get-dashboard-year";
 import { getCategorySummary } from "./routes/myexpenses/dashboard/get-categories-summary";
 import { getTransactionsByMonth } from "./routes/myexpenses/transactions/get-transactions";
+import { getPlanningsByMonth } from "./routes/myexpenses/plannings/get-plannings";
+import { getPlanningsByCategory } from "./routes/myexpenses/plannings/get-plannings-bycategory";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -79,6 +81,8 @@ app.register(getExpensesMonth)
 app.register(getDashboardYears)
 app.register(getCategorySummary)
 app.register(getTransactionsByMonth)
+app.register(getPlanningsByMonth)
+app.register(getPlanningsByCategory)
 
 app.listen({ port: 3333 }).then(() => {
     console.log('HTTP server running!')
