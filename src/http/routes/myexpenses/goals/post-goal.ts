@@ -16,14 +16,14 @@ export async function createGoal(app: FastifyInstance) {
                     titulo: z.string(),
                     dataLimite: z.preprocess((val) => (typeof val === "string" ? new Date(val) : val), z.date()),
                     valorTotal: z.number(),
-                    valorInicial: z.number(),
+                    valorAdicionado: z.number(),
                     descricao: z.string()
                 })
             }
         },
         async (request, reply) => {
             const userId = await request.getCurrentUserId()
-            const { titulo, dataLimite, valorTotal, valorInicial, descricao } = request.body
+            const { titulo, dataLimite, valorTotal, valorAdicionado, descricao } = request.body
 
             const existGoal = await prisma.goal.findFirst({
                 where: {
@@ -41,7 +41,7 @@ export async function createGoal(app: FastifyInstance) {
                     titulo,
                     dataLimite,
                     valorTotal,
-                    valorInicial,
+                    valorAdicionado,
                     descricao,
                     userId
                 }

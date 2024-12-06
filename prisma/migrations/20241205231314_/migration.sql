@@ -88,6 +88,7 @@ CREATE TABLE "goals" (
     "titulo" TEXT NOT NULL,
     "dataLimite" TIMESTAMP(3),
     "valorTotal" DECIMAL(65,30) NOT NULL,
+    "valorAdicionado" DECIMAL(65,30) NOT NULL DEFAULT 0,
     "valorInicial" DECIMAL(65,30),
     "descricao" TEXT,
     "userId" TEXT NOT NULL,

@@ -92,16 +92,17 @@ model Planning {
 }
 
 model Goal {
-  id           String    @id @default(uuid())
-  titulo       String
-  dataLimite   DateTime?
-  valorTotal   Decimal
-  valorInicial Decimal?
-  descricao    String?
-  userId       String
-  user         User      @relation(fields: [userId], references: [id])
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id              String    @id @default(uuid())
+  titulo          String
+  dataLimite      DateTime?
+  valorTotal      Decimal
+  valorAdicionado Decimal   @default(0)
+  valorInicial    Decimal?
+  descricao       String?
+  userId          String
+  user            User      @relation(fields: [userId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
 
   @@map("goals")
 }
