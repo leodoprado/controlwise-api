@@ -21,8 +21,39 @@ export async function createMovement(app: FastifyInstance) {
             }
         },
         async (request, reply) => {
-            const userId = await request.getCurrentUserId()
-            const { valorUnitario, quantidade, data, tipoMovimento, assetId } = request.body
+            const userId = await request.getCurrentUserId();
+            const { valorUnitario, quantidade, data, tipoMovimento, assetId } = request.body;
+
+            const movements = await prisma.assetMovement.findMany({
+                where: { userId, assetId },
+                select: {
+                    quantidade: true,
+                    tipoMovimento: true,
+                },
+            });
+
+            const quantidadeDisponivel = movements.reduce((total, movement) => {
+                if (movement.tipoMovimento === 'COMPRA') {
+                    return total + movement.quantidade.toNumber();
+                } else if (movement.tipoMovimento === 'VENDA') {
+                    return total - movement.quantidade.toNumber();
+                }
+                return total;
+            }, 0);
+
+            if (tipoMovimento === 'VENDA') {
+                if (quantidadeDisponivel <= 0) {
+                    return reply.status(400).send({
+                        message: "Não é possível realizar a venda. Nenhuma movimentação de compra encontrada para este ativo.",
+                    });
+                }
+
+                if (quantidadeDisponivel < quantidade) {
+                    return reply.status(400).send({
+                        message: "Não é possível realizar a venda. Quantidade insuficiente disponível.",
+                    });
+                }
+            }
 
             const movement = await prisma.assetMovement.create({
                 data: {
@@ -31,15 +62,14 @@ export async function createMovement(app: FastifyInstance) {
                     data,
                     tipoMovimento,
                     assetId,
-                    userId
-                }
-            })
+                    userId,
+                },
+            });
 
             return reply.status(201).send({
                 message: "Movimentos de ativo registrado com sucesso.",
-                movement
-            })
+                movement,
+            });
         }
-    )
-
+    );
 }
