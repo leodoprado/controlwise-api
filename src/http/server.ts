@@ -22,8 +22,8 @@ import { updateParameters } from "./routes/config/parameters/update-parameters";
 import { createTransaction } from "./routes/myexpenses/transactions/post-transaction";
 import { createPlanning } from "./routes/myexpenses/plannings/post-planning";
 import { createGoal } from "./routes/myexpenses/goals/post-goal";
-import { getAssets } from "./routes/mywallet/assets/get-assets";
-import { createMovement } from "./routes/mywallet/assets/post-movement";
+import { getAssets } from "./routes/mywallet/dashboard/get-assets";
+import { createMovement } from "./routes/mywallet/dashboard/post-movement";
 import { getExpensesMonth } from "./routes/myexpenses/dashboard/get-dashboard-month";
 import { getDashboardYears } from "./routes/myexpenses/dashboard/get-dashboard-year";
 import { getCategorySummary } from "./routes/myexpenses/dashboard/get-categories-summary";
@@ -32,8 +32,9 @@ import { getPlanningsByMonth } from "./routes/myexpenses/plannings/get-plannings
 import { getPlanningsByCategory } from "./routes/myexpenses/plannings/get-plannings-bycategory";
 import { getUnfinishedGoals } from "./routes/myexpenses/goals/get-goal";
 import { updateGoalValueAdded } from "./routes/myexpenses/goals/put-goal-value";
-import { getAssetMovements } from "./routes/mywallet/assets/get-movement-assets";
-import { getEvolutionMovements } from "./routes/mywallet/assets/get-evolution-movements";
+import { getAssetMovements } from "./routes/mywallet/dashboard/get-movement-assets";
+import { getEvolutionMovements } from "./routes/mywallet/dashboard/get-evolution-movements";
+import { getAssetSummary } from "./routes/mywallet/dashboard/get-assets-summary";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -91,6 +92,7 @@ app.register(getUnfinishedGoals)
 app.register(updateGoalValueAdded)
 app.register(getAssetMovements)
 app.register(getEvolutionMovements)
+app.register(getAssetSummary)
 
 app.listen({ port: 3333 }).then(() => {
     console.log('HTTP server running!')
