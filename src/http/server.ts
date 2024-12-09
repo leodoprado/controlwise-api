@@ -35,6 +35,7 @@ import { updateGoalValueAdded } from "./routes/myexpenses/goals/put-goal-value";
 import { getAssetMovements } from "./routes/mywallet/dashboard/get-movement-assets";
 import { getEvolutionMovements } from "./routes/mywallet/dashboard/get-evolution-movements";
 import { getAssetSummary } from "./routes/mywallet/dashboard/get-assets-summary";
+import { getAllMovements } from "./routes/mywallet/dashboard/get-all-movements";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -93,6 +94,7 @@ app.register(updateGoalValueAdded)
 app.register(getAssetMovements)
 app.register(getEvolutionMovements)
 app.register(getAssetSummary)
+app.register(getAllMovements)
 
 app.listen({ port: 3333 }).then(() => {
     console.log('HTTP server running!')
