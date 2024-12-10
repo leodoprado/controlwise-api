@@ -56,19 +56,33 @@ export async function getEvolutionMovements(app: FastifyInstance) {
             },
         });
 
+        // Ordenar os movimentos por data
+        movements.sort((a, b) => new Date(a.data).getTime() - new Date(b.data).getTime());
+
+        let aggregatedValue = 0; // Valor acumulado até o momento
+
         // Distribuir movimentos nos meses correspondentes
         movements.forEach(({ tipoMovimento, valorUnitario, quantidade, data }) => {
+            const month = new Date(data).getMonth(); // Extrair o índice do mês (0-11)
+            const value = valorUnitario.toNumber() * quantidade.toNumber();
+
             if (tipoMovimento === "COMPRA") {
-                const month = new Date(data).getMonth(); // Extrair o índice do mês (0-11)
-                const value = valorUnitario.toNumber() * quantidade.toNumber();
-                monthlyData[month].aggregatedValue += value; // Somamos valores como números
+                aggregatedValue += value;
+            } else if (tipoMovimento === "VENDA") {
+                aggregatedValue -= value;
             }
+
+            monthlyData[month].aggregatedValue = aggregatedValue; // Atualizar valor acumulado
         });
 
-        // Retornar os valores formatados como string na resposta
-        return reply.send(monthlyData.map((monthData) => ({
+        // Retornar todos os meses, formatando os valores
+        const formattedMonthlyData = monthlyData.map((monthData) => ({
             month: monthData.month,
-            aggregatedValue: monthData.aggregatedValue.toFixed(2), // Formatamos na resposta
-        })));
+            aggregatedValue: monthData.aggregatedValue > 0
+                ? monthData.aggregatedValue.toFixed(2) // Valor formatado
+                : "0.00", // Meses sem movimentação mantêm valor 0
+        }));
+
+        return reply.send(formattedMonthlyData);
     });
 }

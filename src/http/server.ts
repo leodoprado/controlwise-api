@@ -36,6 +36,8 @@ import { getAssetMovements } from "./routes/mywallet/dashboard/get-movement-asse
 import { getEvolutionMovements } from "./routes/mywallet/dashboard/get-evolution-movements";
 import { getAssetSummary } from "./routes/mywallet/dashboard/get-assets-summary";
 import { getAllMovements } from "./routes/mywallet/dashboard/get-all-movements";
+import { getAssetSummaryByYear } from "./routes/mywallet/irpf/get-assets-year";
+import { getReportByParameters } from "./routes/myexpenses/reports/get-dados";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>()
 
@@ -95,6 +97,8 @@ app.register(getAssetMovements)
 app.register(getEvolutionMovements)
 app.register(getAssetSummary)
 app.register(getAllMovements)
+app.register(getAssetSummaryByYear)
+app.register(getReportByParameters)
 
 app.listen({ port: 3333 }).then(() => {
     console.log('HTTP server running!')
